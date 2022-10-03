@@ -33,19 +33,19 @@
                                placeholder: "Enter your password" %>
         </div>
 
-        <%= fields_for(:organization) do |org| %>
+        <%= fields_for :organization do |org| %>
           <div class="row">
-          <div class="field mb-3 col-6">
-            <%= org.label :name, 'Organization' %>
-            <%= org.text_field :name, required: true, class: 'form-control' %>
-          </div>
-
-          <div class="field mb-3 col-6">
-            <%= org.label :plan %>
-            <div>
-            <%= org.select :plan, [['Free', 'free'], ['Premium', 'premium']], {}, required: true, class: 'form-control' %>
+            <div class="field mb-3 col-6">
+              <%= org.label :name, 'Organization' %>
+              <%= org.text_field :name, required: true, class: 'form-control' %>
             </div>
-          </div>
+
+            <div class="field mb-3 col-6">
+              <%= org.label :plan %>
+              <div>
+                <%= org.select :plan, [['Free', 'free'], ['Premium', 'premium']], {}, required: true, class: 'form-control' %>
+              </div>
+            </div>
           </div>
         <% end %>
 
