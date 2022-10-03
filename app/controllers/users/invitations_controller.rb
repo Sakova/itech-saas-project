@@ -1,4 +1,6 @@
 class Users::InvitationsController < Devise::InvitationsController
+  before_action :request_admin, only: [ :new, :create ]
+
   def update
     raw_invitation_token = update_resource_params[:invitation_token]
     self.resource = accept_resource

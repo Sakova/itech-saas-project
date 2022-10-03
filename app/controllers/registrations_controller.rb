@@ -20,9 +20,11 @@ class RegistrationsController < Devise::RegistrationsController
       org = Organization.create_new_organization(sign_up_params_organization)
       if org
         resource.organizations << org
+        resource.admin = true if first_user_of_organization?(org)
       else
-        flash.now[:notice] = "Incorrect data of organization"
+        flash[:notice] = "Incorrect data of organization"
         render 'devise/registrations/new'
+        return true
       end
     end
 
@@ -178,5 +180,13 @@ class RegistrationsController < Devise::RegistrationsController
     return true if account_update_params[:password].blank?
 
     Devise.sign_in_after_change_password
+  end
+
+  def first_user_of_organization?(organization)
+    if organization.users.empty?
+      return true
+    else
+      return false
+    end
   end
 end
