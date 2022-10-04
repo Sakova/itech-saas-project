@@ -5,6 +5,9 @@ class Organization < ApplicationRecord
   has_many :users, through: :organization_users
 
   validates :name, uniqueness: true, presence: true
+  before_create do
+    self.name.strip!
+  end
 
   enum plan: %i[free premium]
 
@@ -18,5 +21,9 @@ class Organization < ApplicationRecord
       org = nil
     end
     return org
+  end
+
+  def can_create_projects?
+    (plan == 'free' && projects.count < 1) || (plan == 'premium')
   end
 end

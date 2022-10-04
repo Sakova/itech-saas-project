@@ -1,0 +1,43 @@
+<%- model_class = Project -%>
+<div class="container">
+  <div class="page-header">
+  <h1>Projects</h1>
+  </div>
+  <% if @projects.size > 0 %>
+    <table class="table table-striped">
+      <tr>
+        <th>Title</th>
+        <th>Details</th>
+        <th>Expected completion date</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @projects.each do |project| %>
+        <tr>
+          <td><%= link_to project.title,
+                          organization_project_path(project, organization_id: @org.id), class: 'text-decoration-none' %></td>
+          <td><%= project.details %></td>
+          <td><%= project.expected_completion_date %></td>
+          <td>
+            <%= link_to "Edit",
+                        edit_organization_project_path(project, organization_id: @org.id), :class => 'btn btn-secondary' %>
+            <%= link_to 'Edit Users', '#',
+                        :class => 'btn btn-primary' %>
+            <%= link_to "Delete",
+                        organization_project_path(project, organization_id: @org.id),
+                        :method => :delete,
+                        :data => { :confirm => "Are you sure?" },
+                        :class => 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p class="lead">You don't have any projects</p>
+  <% end %>
+
+  <% if (@org.can_create_projects?) %>
+    <%= link_to 'New Project', new_organization_project_path(organization_id: @org.id),
+                :class => 'btn btn-primary' %>
+  <% end %>
+</div>

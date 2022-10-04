@@ -1,6 +1,7 @@
 <div class="container">
   <% if current_user %>
-    <h3>Organization: <%= @org.name %></h3>
+    <h3 class="text-end">Organization: <%= @org.name %></h3>
+    <%= render 'projects/list' %>
   <% else %>
     <div class="container mb-5">
       <div class="mt-4 p-5 text-white rounded jumbotron">

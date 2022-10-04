@@ -1,0 +1,39 @@
+<div class="container">
+  <div>
+    <h3><%= @project.title %></h3>
+    <h3><small class="fw-light">Organization - <%= organization_name %></small></h3>
+  </div>
+
+  <hr>
+
+  <table class="table table-sm table-borderless project-table mb-5">
+    <tr>
+      <td class="fw-bold">Title:</td>
+      <td><%= @project.title %></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">Details:</td>
+      <td><%= @project.details %></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">Expected completion date:</td>
+      <td><%= @project.expected_completion_date %></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">Organization</td>
+      <td><%= organization_name %></td>
+    </tr>
+  </table>
+
+  <%= link_to '< Back to Organization Home', root_path, :class => 'btn btn-secondary'  %>
+  <%= link_to "Edit",
+              edit_organization_project_path(project: @project, organization: @project.organization_id),
+              :class => 'btn btn-primary' %>
+  <%#= link_to 'Edit Project Users', '#',
+              :class => 'btn btn-default' %>
+  <%= link_to 'Destroy',
+              organization_project_path(@project, @project.organization_id),
+              :method => 'delete',
+              :data => { :confirm => 'Are you sure?' },
+              :class => 'btn btn-danger' %>
+</div>
