@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   resources :organizations do
     resources :projects
   end
-
+  resources :artifacts
 end

@@ -25,6 +25,9 @@
     </tr>
   </table>
 
+  <h3>Artifacts</h3>
+  <%= render 'artifacts/list', artifacts: @project.artifacts%> <br> <br>
+
   <%= link_to '< Back to Organization Home', root_path, :class => 'btn btn-secondary'  %>
   <%= link_to "Edit",
               edit_organization_project_path(project: @project, organization: @project.organization_id),

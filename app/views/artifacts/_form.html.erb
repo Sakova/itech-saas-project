@@ -1,0 +1,35 @@
+<%= form_with model: @artifact do |f| %>
+  <% if @artifact.errors.any? %>
+    <div class="container alert alert-danger">
+      <div class="panel-body">
+        <ul>
+          <% @artifact.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="field mb-3">
+    <%= f.label :name, class: "form-label" %>
+    <%= f.text_field :name,
+                     class: "form-control",
+                     placeholder: "Enter artifact name" %>
+  </div>
+
+  <div class="field mb-3">
+    <%= f.label :file, class: "form-label" %>
+    <%= f.file_field :file,
+                     class: "form-control",
+                     placeholder: "Choose file" %>
+  </div>
+
+
+  <%= f.hidden_field :project_id %>
+
+  <%= f.submit nil, class: 'btn btn-primary' %>
+  <%= link_to "Cancel",
+              organization_project_path(organization_id: session[:organization_id], id: @artifact.project_id),
+              class: 'btn btn-default' %>
+<% end %>

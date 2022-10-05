@@ -21,6 +21,38 @@ local:
 #   credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
 #   bucket: your_own_bucket
 
+google_dev:
+  service: GCS
+  project: saas-app
+  bucket: saas-app-bucket
+  credentials:
+    type: "service_account"
+    project_id: <%= Rails.application.credentials.dig(:gcskey, :project_id) %>
+    private_key_id: <%= Rails.application.credentials.dig(:gcskey, :private_key_id) %>
+    private_key: <%= Rails.application.credentials.dig(:gcskey, :private_key).dump %>
+    client_email: <%= Rails.application.credentials.dig(:gcskey, :client_email).dump %>
+    client_id: <%= Rails.application.credentials.dig(:gcskey, :client_id).dump %>
+    auth_uri: "https://accounts.google.com/o/oauth2/auth"
+    token_uri: "https://accounts.google.com/o/oauth2/token"
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
+    client_x509_cert_url: <%= Rails.application.credentials.dig(:gcskey, :client_x509_cert_url).dump %>
+
+google_prod:
+  service: GCS
+  project: saas-app
+  bucket: saas-app-bucket
+  credentials:
+    type: "service_account"
+    project_id: <%= ENV['PROJECT_ID'] %>
+    private_key_id: <%= ENV['PRIVATE_KEY_ID'] %>
+    private_key: <%= ENV['PRIVATE_KEY'] %>
+    client_email: <%= ENV['CLIENT_EMAIL'] %>
+    client_id: <%= ENV['CLIENT_ID'] %>
+    auth_uri: "https://accounts.google.com/o/oauth2/auth"
+    token_uri: "https://accounts.google.com/o/oauth2/token"
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
+    client_x509_cert_url: <%= ENV['CLIENT_X509_CERT_URL'] %>
+
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:
 #   service: AzureStorage

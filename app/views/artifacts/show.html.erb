@@ -1,0 +1,28 @@
+<div class="container">
+  <div>
+    <h3><%= @artifact.name %></h3>
+    <h3><small class="fw-light">Organization - <%= organization_name %></small></h3>
+  </div>
+
+  <hr>
+
+  <table class="table table-sm table-borderless artifact-table-show mb-5">
+    <tr>
+      <td class="fw-bold">Name:</td>
+      <td><%= @artifact.name %></td>
+    </tr>
+    <tr>
+      <td class="fw-bold">Key:</td>
+      <td><%= link_to 'Open File', @artifact.key, target: '_blank', class: 'text-decoration-none' %></td>
+    </tr>
+  </table>
+
+  <%= link_to '< Back to Project',
+              organization_project_path(organization_id: session[:organization_id], id: @artifact.project_id),
+              :class => 'btn btn-secondary'  %>
+  <%= link_to "Delete",
+              artifact_path(@artifact),
+              :method => :delete,
+              :data => { :confirm => "Are you sure?" },
+              :class => 'btn btn-danger' %>
+</div>

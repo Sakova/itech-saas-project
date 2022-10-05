@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   has_many :users, through: :user_project
   belongs_to :organization
   validates :title, uniqueness: true
+  has_many :artifacts, dependent: :destroy
 
   def self.by_user_plan_and_organization(org_id, user)
     org = Organization.find(org_id)
