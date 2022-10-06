@@ -21,4 +21,12 @@ class Project < ApplicationRecord
       end
     end
   end
+
+  def self.set_project_check(project_id, organization)
+    if organization.plan == 'free'
+      return organization.projects[0]
+    else
+      return organization.projects.find(project_id)
+    end
+  end
 end

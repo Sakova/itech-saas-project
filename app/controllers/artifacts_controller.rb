@@ -11,7 +11,7 @@ class ArtifactsController < ApplicationController
 
   def new
     @artifact = Artifact.new
-    @artifact.project_id = @organization.projects[0].id
+    @artifact.project_id = session[:project_id]
   end
 
   def edit

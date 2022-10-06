@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :set_organization, only: [:show, :edit, :update, :destroy, :new, :create]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :verify_organization
   before_action :free_plan_can_only_have_one_project, only: [:new, :create]
 
@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    session[:project_id] = @project.id
   end
 
   def new
@@ -48,7 +49,7 @@ class ProjectsController < ApplicationController
   private
 
   def set_project
-    @project = Project.find(params[:id])
+    @project = Project.set_project_check(params[:id], @organization)
   end
 
   def project_params
@@ -66,8 +67,10 @@ class ProjectsController < ApplicationController
   end
 
   def free_plan_can_only_have_one_project
-    if @organization.projects.count >= 1
+    if @organization.projects.count <= 1 && @organization.plan == 'free'
       redirect_to root_path, notice: 'Free plans can not have more than one project'
     end
   end
+
+
 end

@@ -30,6 +30,7 @@ class SessionsController < Devise::SessionsController
     set_flash_message! :notice, :signed_out if signed_out
     yield if block_given?
     session[:organization_id] = nil
+    session[:project_id] = nil if session[:project_id]
     respond_to_on_destroy
   end
 
