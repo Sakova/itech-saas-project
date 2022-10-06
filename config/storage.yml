@@ -27,15 +27,15 @@ google_dev:
   bucket: saas-app-bucket
   credentials:
     type: "service_account"
-    project_id: <%= Rails.application.credentials.dig(:gcskey, :project_id) %>
-    private_key_id: <%= Rails.application.credentials.dig(:gcskey, :private_key_id) %>
-    private_key: <%= Rails.application.credentials.dig(:gcskey, :private_key).dump %>
-    client_email: <%= Rails.application.credentials.dig(:gcskey, :client_email).dump %>
-    client_id: <%= Rails.application.credentials.dig(:gcskey, :client_id).dump %>
+    project_id: <%= ENV['PROJECT_ID'] %>
+    private_key_id: <%= ENV['PRIVATE_KEY_ID'] %>
+    private_key: <%= ENV['PRIVATE_KEY'].dump %>
+    client_email: <%= ENV['CLIENT_EMAIL'] %>
+    client_id: <%= ENV['CLIENT_ID'] %>
     auth_uri: "https://accounts.google.com/o/oauth2/auth"
     token_uri: "https://accounts.google.com/o/oauth2/token"
     auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
-    client_x509_cert_url: <%= Rails.application.credentials.dig(:gcskey, :client_x509_cert_url).dump %>
+    client_x509_cert_url: <%= ENV['CLIENT_X509_CERT_URL'] %>
 
 google_prod:
   service: GCS
@@ -45,7 +45,7 @@ google_prod:
     type: "service_account"
     project_id: <%= ENV['PROJECT_ID'] %>
     private_key_id: <%= ENV['PRIVATE_KEY_ID'] %>
-    private_key: <%= ENV['PRIVATE_KEY'] %>
+    private_key: <%= ENV['PRIVATE_KEY_PROD'] %>
     client_email: <%= ENV['CLIENT_EMAIL'] %>
     client_id: <%= ENV['CLIENT_ID'] %>
     auth_uri: "https://accounts.google.com/o/oauth2/auth"
