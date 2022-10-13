@@ -22,13 +22,15 @@ class RegistrationsController < Devise::RegistrationsController
         resource.organizations << org
         resource.admin = true if first_user_of_organization?(org)
       else
-        flash[:notice] = "Incorrect data of organization"
+        flash[:alert] = "Incorrect data of organization"
         render 'devise/registrations/new'
         return true
       end
     end
 
-    resource.save
+    if resource.save
+      return render json: { stripe_id: resource.stripe_customer_id, plan: resource.organizations[0].plan }
+    end
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?

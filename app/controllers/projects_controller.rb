@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :verify_organization
   before_action :free_plan_can_only_have_one_project, only: [:new, :create]
+  before_action :request_admin, only: [ :new, :create, :update, :edit, :destroy ]
 
   def index
     @projects = Project.by_user_plan_and_organization(params[:organization_id], current_user)
@@ -67,7 +68,7 @@ class ProjectsController < ApplicationController
   end
 
   def free_plan_can_only_have_one_project
-    if @organization.projects.count <= 1 && @organization.plan == 'free'
+    if !(@organization.projects.count <= 1) && @organization.plan == 'free'
       redirect_to root_path, notice: 'Free plans can not have more than one project'
     end
   end

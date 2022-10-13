@@ -35,7 +35,7 @@
   <%#= link_to 'Edit Project Users', '#',
               :class => 'btn btn-default' %>
   <%= link_to 'Destroy',
-              organization_project_path(@project, @project.organization_id),
+              organization_project_path(@project, organization_id: @project.organization_id),
               :method => 'delete',
               :data => { :confirm => 'Are you sure?' },
               :class => 'btn btn-danger' %>

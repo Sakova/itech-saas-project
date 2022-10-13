@@ -13,13 +13,15 @@
 
       <% @projects.each do |project| %>
         <tr>
-          <td><%= link_to project.title,
-                          organization_project_path(project, organization_id: @org.id), class: 'text-decoration-none' %></td>
-          <td><%= project.details %></td>
+          <td><%= link_to truncate(project.title, length: 20),
+                          organization_project_path(project, organization_id: @org.id),
+                          class: 'text-decoration-none' %></td>
+          <td><%= truncate(project.details, length: 20) %></td>
           <td><%= project.expected_completion_date %></td>
           <td>
             <%= link_to "Edit",
-                        edit_organization_project_path(project, organization_id: @org.id), :class => 'btn btn-secondary' %>
+                        edit_organization_project_path(project, organization_id: @org.id),
+                        :class => 'btn btn-secondary' %>
             <%= link_to 'Edit Users', '#',
                         :class => 'btn btn-primary' %>
             <%= link_to "Delete",
@@ -35,7 +37,7 @@
     <p class="lead">You don't have any projects</p>
   <% end %>
 
-  <% if (@org.can_create_projects?) %>
+  <% if (@org.can_create_projects?) && !current_user.invited_by_id? %>
     <%= link_to 'New Project', new_organization_project_path(organization_id: @org.id),
                 :class => 'btn btn-primary' %>
   <% end %>

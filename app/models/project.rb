@@ -2,7 +2,10 @@ class Project < ApplicationRecord
   has_many :user_project
   has_many :users, through: :user_project
   belongs_to :organization
-  validates :title, uniqueness: true
+  validates :expected_completion_date, presence: true
+  validates :title, presence: true, length: {minimum: 3, maximum: 25}
+  validates :details, presence: true, length: {minimum: 5, maximum: 125}
+  validate :expected_completion_date_greater_then_today
   has_many :artifacts, dependent: :destroy
 
   def self.by_user_plan_and_organization(org_id, user)
@@ -27,6 +30,12 @@ class Project < ApplicationRecord
       return organization.projects[0]
     else
       return organization.projects.find(project_id)
+    end
+  end
+
+  def expected_completion_date_greater_then_today
+    unless !expected_completion_date.present? || expected_completion_date > Time.now
+      errors.add(:expected_completion_date, "must be greater than today")
     end
   end
 end

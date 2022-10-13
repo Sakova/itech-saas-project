@@ -12,3 +12,67 @@ import "bootstrap"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+document.addEventListener("turbolinks:load", function() {
+    $(document).ready(function () {
+        $('.sign-up-btn').on('click', function (event) {
+            event.preventDefault();
+            let $form = $('#new_user');
+            $form.find("input[type=submit]").prop("disabled", true);
+            let user_email = $form.find('input[name="user[email]"]').val();
+            let user_password = $form.find('input[name="user[password]"]').val();
+            let user_password_confirmation = $form.find('input[name="user[password_confirmation]"]').val();
+            let user_organization_name = $form.find('input[name="organization[name]"]').val();
+            let user_organization_plan = $form.find('select[name="organization[plan]"]').val();
+
+            $.ajax({
+                url: "/users",
+                type: "post",
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    user: {
+                        email: user_email,
+                        password: user_password,
+                        password_confirmation: user_password_confirmation
+                    },
+                    organization: {
+                        name: user_organization_name,
+                        plan: user_organization_plan
+                    },
+                }),
+                success: function (data) {
+                    console.log(data)
+                    if (data.plan == 'premium') {
+                        $.ajax({
+                            url: "/checkout/create",
+                            type: "post",
+                            contentType: "application/json",
+                            data: JSON.stringify({
+                                data_for_stripe: {
+                                    stripe_customer_id: data.stripe_id
+                                }
+                            }),
+                            success: function (data) {
+                                console.log('success');
+                            },
+                            error: function (data) {
+                                console.log('error');
+                            }
+                        })
+                    } else {
+                        document.location.href = '/?notice=true';
+                    }
+                },
+                error: function (data) {
+                    console.log('error');
+                }
+            })
+        });
+        if(window.location.search === "?plan=premium") {
+            $('select>option:eq(2)').attr('selected', true);
+        } else if(window.location.search === "?plan=free") {
+            $('select>option:eq(1)').attr('selected', true);
+        }
+    });
+});

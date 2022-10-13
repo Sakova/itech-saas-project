@@ -4,7 +4,7 @@ class Organization < ApplicationRecord
   has_many :organization_users
   has_many :users, through: :organization_users
 
-  validates :name, uniqueness: true, presence: true
+  validates :name, presence: true
   before_create do
     self.name.strip!
   end

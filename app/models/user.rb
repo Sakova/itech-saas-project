@@ -10,4 +10,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :validatable
+
+  def to_s
+    email
+  end
+
+  after_create do
+    unless invited_by_id?
+      customer = Stripe::Customer.create(email: self.email)
+      update(stripe_customer_id: customer.id)
+    end
+  end
 end
