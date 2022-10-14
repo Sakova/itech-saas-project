@@ -1,0 +1,56 @@
+<div class="container">
+  <p class="fs-2">Members at <%= @project.title %> project</p>
+  <% if @members.size > 0 %>
+    <table class="table table-striped">
+      <tr>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+
+      <% @members.each do |member| %>
+        <tr>
+          <td><%= member.user.email %></td>
+          <td>
+            <%= link_to "Remove",
+                        organization_project_member_path(organization_id: @project.organization_id, project_id: member.project.id, id: member.id),
+                        :method => :delete,
+                        :data => { :confirm => "Are you sure?" },
+                        :class => 'btn btn-danger',
+                        remote: true %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p class="lead">You don't have any Members</p>
+  <% end %>
+
+  <p class="mt-5 fs-2">Members for invite to the <%= @project.title %> project</p>
+  <% if @invited.size > 0 %>
+    <table class="table table-striped">
+      <tr>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+
+      <% @invited.each do |invite| %>
+        <% unless @project.users.include? invite %>
+          <tr>
+            <td><%= invite.email %></td>
+            <td>
+              <%= link_to "Add",
+                          organization_project_members_path(organization_id: @project.organization_id, project_id: @project.id, user_id: invite.id),
+                          method: :post,
+                          :class => 'btn btn-success',
+                          remote: true %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  <% else %>
+    <p class="lead">You don't have any Members</p>
+  <% end %>
+
+  <%= link_to 'Back', root_path, class: 'btn btn-secondary'  %>
+</div>

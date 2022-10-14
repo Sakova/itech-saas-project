@@ -33,7 +33,8 @@
             <%= link_to "Update Plan", checkout_create_path,
                         method: :post,
                         remote: true,
-                        class: "btn btn-success me-5" %>
+                        class: "btn btn-success me-5",
+                        id: 'premium'%>
           <% end %>
           <%= link_to 'Edit', edit_user_registration_path, class: 'btn btn-warning me-2' %>
           <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-danger me-2' %>

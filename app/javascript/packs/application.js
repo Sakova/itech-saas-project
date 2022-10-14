@@ -13,6 +13,14 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+let colors = [
+    "btn-primary",
+    "btn-secondary",
+    "btn-success",
+    "btn-danger",
+    "btn-warning text-dark",
+];
+
 document.addEventListener("turbolinks:load", function() {
     $(document).ready(function () {
         $('.sign-up-btn').on('click', function (event) {
@@ -74,5 +82,20 @@ document.addEventListener("turbolinks:load", function() {
         } else if(window.location.search === "?plan=free") {
             $('select>option:eq(1)').attr('selected', true);
         }
+
+        ( () => {
+            function changeColors() {
+                if (document.getElementById("premium") != null) {
+                    let num = Math.floor(Math.random() * 5);
+                    document.getElementById(
+                        "premium"
+                    ).className = `btn ${colors[num]} me-5`;
+                    setTimeout(() => {
+                        changeColors();
+                    }, 10000);
+                }
+            }
+            changeColors();
+        } )();
     });
 });

@@ -1,6 +1,8 @@
 class Project < ApplicationRecord
   has_many :user_project
   has_many :users, through: :user_project
+  has_many :members
+  has_many :users, through: :members
   belongs_to :organization
   validates :expected_completion_date, presence: true
   validates :title, presence: true, length: {minimum: 3, maximum: 25}

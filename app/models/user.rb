@@ -3,7 +3,8 @@ class User < ApplicationRecord
   has_many :projects, through: :user_project
   has_many :organization_users
   has_many :organizations, through: :organization_users
-
+  has_many :members
+  has_many :projects, through: :members
   has_one :member
 
   # Include default devise modules. Others available are:
