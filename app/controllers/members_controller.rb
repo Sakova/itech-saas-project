@@ -5,7 +5,7 @@ class MembersController < ApplicationController
 
   def index
     @members = @project.members
-    @invited = User.where(invited_by: @project.organization.users.find_by(admin: true))
+    @invited = User.where(invited_by: @project.organization.users.find_by(admin: true)).where.not(invitation_accepted_at: nil)
   end
 
   def create
