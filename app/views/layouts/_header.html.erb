@@ -9,7 +9,7 @@
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><%= link_to 'Home', root_path, class: 'nav-link px-2 text-secondary' %></li>
-        <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+        <li><%= link_to "Features", features_path, class: "nav-link px-2 text-white" %></li>
         <% if user_signed_in? && current_user.admin? %>
           <%= link_to "Add new member", new_user_invitation_path, class: "nav-link px-2 text-white" %>
           <div class="dropdown">

@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:index, :features]
 
   def index
     flash.now[:notice] = "You will receive an email with instructions" +
@@ -9,6 +9,10 @@ class HomeController < ApplicationController
       @projects = Project.by_user_plan_and_organization(@org.id, current_user)
       params[:organization_id] = @org.id
     end
+  end
+
+  def features
+
   end
 
   private
