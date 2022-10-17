@@ -185,10 +185,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def first_user_of_organization?(organization)
-    if organization.users.empty?
-      return true
-    else
-      return false
-    end
+    organization.users.empty?
   end
 end

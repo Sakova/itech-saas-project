@@ -10,14 +10,14 @@ class MembersController < ApplicationController
 
   def create
     @member = Member.new(member_params)
-    @member.save
+    @member.save!
     respond_to do |format|
       format.js {render inline: "location.reload();" }
     end
   end
 
   def destroy
-    @member.destroy
+    @member.destroy!
     flash.now[:notice] = "Member was successfully removed"
     respond_to do |format|
       format.js {render inline: "location.reload();" }

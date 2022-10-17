@@ -12,15 +12,11 @@ class Organization < ApplicationRecord
   enum plan: %i[free premium]
 
   def self.create_new_organization(org_params)
-
     org = Organization.new(org_params)
 
-    if org.valid?
-      org.save
-    else
-      org = nil
+    if org.save
+     org
     end
-    return org
   end
 
   def can_create_projects?
